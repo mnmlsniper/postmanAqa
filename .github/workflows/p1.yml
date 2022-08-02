@@ -1,4 +1,4 @@
-name: Test-Build
+name: apiTest
 on:
   push:
     branches:
@@ -7,10 +7,6 @@ jobs:
   test-api:
     runs-on: ubuntu-latest
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-
-
       # INstall Node on the runner
       - name: Install Node
         uses: actions/checkout@v3
@@ -23,20 +19,16 @@ jobs:
         run: |
           npm install -g newman
           npm install -g newman-reporter-htmlextra
-      # Make directory to upload the test results
-      - name: Make Directory for results
-        run: mkdir -p testResults
-
 
       # Run the POSTMAN collection
       - name: Run POSTMAN collection
         run: |
-          newman run demo.json --reporters cli,htmlextra --reporter-htmlextra-export testResults/htmlreport.html --reporter-htmlextra-darkTheme  > testResults/runreport1.html
+          newman run demo.json --reporters cli,htmlextra --reporter-htmlextra-export index.html --reporter-htmlextra-darkTheme  
       # Upload the contents of Test Results directory to workspace
       - name: Output the run Details
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: always()
         continue-on-error: true
         with:
           name: RunReports
-          path: testResults
+          path: index.html
