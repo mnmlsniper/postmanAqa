@@ -13,9 +13,9 @@ jobs:
 
       # INstall Node on the runner
       - name: Install Node
-        uses: actions/setup-node@v1
+        uses: actions/checkout@v3
         with:
-          node-version: "12.x"
+          node-version: "16.x"
 
 
       # Install the newman command line utility and also install the html extra reporter
@@ -35,6 +35,8 @@ jobs:
       # Upload the contents of Test Results directory to workspace
       - name: Output the run Details
         uses: actions/upload-artifact@v2
+        if: always()
+        continue-on-error: true
         with:
           name: RunReports
           path: testResults
