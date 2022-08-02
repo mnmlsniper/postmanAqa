@@ -29,7 +29,7 @@
 							"const a = pm.response.json();",
 							"console.log(a);",
 							"",
-							"    pm.response.to.have.status(200);",
+							"    pm.response.to.have.status(201);",
 							"",
 							"});"
 						],
